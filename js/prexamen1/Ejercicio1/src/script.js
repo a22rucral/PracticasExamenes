@@ -75,7 +75,15 @@
     }
     
     const crear_cookie = () => {
-        
+        const nombre = prompt('Dime el nombre de la  cookie');
+        const valor = prompt('Dime el valor de la  cookie'); 
+        const dias = parseInt(prompt('Dime el numero de dias hasta la expiración'));
+        let fecha = new Date();
+        fecha.setTime(fecha.getTime + (dias * 24 * 60 * 60 * 1000));
+        let expiración = "expires=" + fecha.toUTCString();
+        document.cookie = `${nombre}=${valor};${expiración};path=/`;
+        console.log(`Cokkie ${nombre} creada con exito`);
+
     }
 
     const crear_ventana = () => {
@@ -83,7 +91,7 @@
     }
     
     const validar_cadena = () => {
-        const regexp = /\d{4}\-[A-Z]{3}/
+        const regexp = /^\d{4}\-[A-Z]{3}$/
         let matricula = prompt('Dime la matrícula: (0000-XXX)');
         matricula = matricula.match(regexp);
         matricula ? mensaje = 'La matrícula es válida' : mensaje ='La matrícula no está en formato';
@@ -92,11 +100,19 @@
 
 
     const listar_cookie = () => {
-        
+        let cookies = document.cookie;
+        if(cookies){
+            console.log("Cokies almacenadas \n" + cookies);
+        }
+        else{
+            console.log("No se ha añadido ninguna todavia");
+        }
     }
     
     const borrar_cookie = () => {
-        
+        let nombre = prompt("Dime el nombre de la cookie a borrar");
+        document.cookie = `${nombre}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        console.log("Cookie "+ nombre+" boorada con exito"); 
     }
     
     edad_boton.addEventListener('click', gestionar_edad);
